@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Songs Homepage - Welcome to My Music Store</title>
+    <style type="text/css">
+        body {
+            width: 1200px;
+            margin: auto;
+        }
+        .btn {
+            color: white;
+            background: cornflowerblue;
+            padding: 2px 4px;
+            border: 3px solid cornflowerblue;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: "Lucida Fax", serif;
+            margin-right: 14px;
+            margin-left: 10px;
+        }
+        #addNewTrack {
+            margin-left: -650px;
+            background: green;
+        }
+        label,form,a{
+            display: inline-block;
+        }
+        label{
+            color: #307192;
+            font-size: 20px;
+        }
+        #oneElement{
+            margin-bottom: 15px;
+        }
+    </style>
+    <script>
+        // Function to change the color of the h5 element
+        function changeColor() {
+            const h5Element = document.querySelector("h5");
+            if (h5Element) {
+                const colors = ["red", "blue", "green", "orange", "purple"];
+                let colorIndex = 0;
+
+                setInterval(() => {
+                    h5Element.style.color = colors[colorIndex];
+                    colorIndex = (colorIndex + 1) % colors.length;
+                }, 1000);
+            }
+        }
+
+        // Run the function after the DOM is loaded
+        document.addEventListener("DOMContentLoaded", changeColor);
+    </script>
+</head>
+<body>
+<header>
+    <h1>Welcome to My Music Store</h1>
+</header>
+<main>
+
+    <h2>Choose a song:</h2>
+    <!-- Display radio buttons for each song,
+            the value should be the trackId
+            and the displayed text should be Title:
+            <songTitle>, Genre:<genre>, Release Year: <releaseYear> -->
+    <th:block th:if="${songs.size() != 0}">
+    <h5 th:if="${hasError}" th:text="${error}">This is a dynamic message</h5>
+    <form method="get" action="/artists">
+    <div id="oneElement" th:each="song : ${songs}">
+        <label for="trackId">
+            <input type="radio" name="trackId" id="trackId" th:value="${song.getTrackId()}"
+                   th:text="${song.getTitle()} + ', Genre: ' + ${song.getGenre()} + ', Release Year: ' + ${song.getReleaseYear()}+', Album: '+${song.getAlbum().getName()}">
+        </label>
+
+        <a style="background:red;" class="btn btn-danger" th:href="@{'/songs/delete/{id}' (id=${song.getId()})}"><i>Delete</i></a>
+        <a class="btn btn-danger" th:href="@{'/songs/edit-form/{id}' (id=${song.getId()})}"><i>Edit</i></a>
+        <br />
+    </div>
+        <a><input style="background: navy;" type="submit" class="btn btn-dark" value="Submit"></a>
+    </form>
+    <a id="addNewTrack" href="/add-form" class="btn btn-dark">
+        Add new Track
+    </a>
+    </th:block>
+    <th:block th:if="${songs.size() == 0}">
+        <h3 style="color: red">You Deleted all the songs??!!!</h3>
+    </th:block>
+</main>
+</body>
+</html>
