@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Artist to Song</title>
+</head>
+<body>
+<h1>Add Artist to Song</h1>
+<form th:action="@{/songs/add-artist}" method="post">
+    <input type="hidden" name="songId" th:value="${song.id}"/>
+    <label for="artist">Select Artist:</label>
+    <select id="artist" name="artistId">
+        <option th:each="artist : ${artists}" th:value="${artist.id}" th:text="${artist.firstName + ' ' + artist.lastName}"></option>
+    </select>
+    <br/>
+    <button type="submit">Add Artist</button>
+</form>
+<a th:href="@{/songs/details/{songId}(songId=${song.id})}">Back to Song Details</a>
+</body>
+</html>

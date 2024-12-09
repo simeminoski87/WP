@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Songs</title>
+</head>
+<body>
+<h1>Song List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Release Year</th>
+        <th>Track ID</th>
+        <th>Album</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="song : ${songs}">
+        <td th:text="${song.title}"></td>
+        <td th:text="${song.genre}"></td>
+        <td th:text="${song.releaseYear}"></td>
+        <td th:text="${song.trackId}"></td>
+        <td th:text="${song.album.name}"></td>
+        <td>
+            <a th:href="@{/songs/edit/{id}(id=${song.id})}">Edit</a>
+            <a th:href="@{/songs/details/{id}(id=${song.id})}">Details</a>
+            <form th:action="@{/songs/delete/{id}(id=${song.id})}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/songs/add-form">Add New Song</a>
+</body>
+</html>

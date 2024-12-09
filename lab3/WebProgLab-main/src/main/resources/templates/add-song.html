@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Song</title>
+</head>
+<body>
+<h1>Add/Edit Song</h1>
+<form th:action="@{/songs/saveSong}" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title"/>
+    <br/>
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre"/>
+    <br/>
+    <label for="releaseYear">Release Year:</label>
+    <input type="number" id="releaseYear" name="releaseYear"/>
+    <br/>
+    <label for="trackId">Track ID:</label>
+    <input type="text" id="trackId" name="trackId" />
+    <br/>
+    <label for="album">Album:</label>
+    <select id="album" name="albumId">
+        <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}"></option>
+    </select>
+    <br/>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
